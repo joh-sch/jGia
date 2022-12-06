@@ -9,10 +9,18 @@ import createInstance from "./createInstance";
  */
 
 export default function loadComponents(components = {}, context = document.documentElement) {
+  ///////////////////////////////////
+  // Exit, if no comp. provided... //
+  ///////////////////////////////////
+
   if (!components || Object.keys(components).length === 0) {
     console.warn("App has no components");
     return;
   }
+
+  ///////////////////////////////////
+  // ...otherwise, load components //
+  ///////////////////////////////////
 
   let initialisedComponents = [];
 
