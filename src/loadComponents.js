@@ -8,7 +8,7 @@ import createInstance from "./createInstance";
  * @param context: DOM element
  */
 
-export default function loadComponents(components = {}, context = document.documentElement, elementID) {
+export default function loadComponents(components = {}, context = document.documentElement, elementID, eventbus) {
   const initialisedComponents = [];
 
   ///////////////////////////////////
@@ -37,7 +37,7 @@ export default function loadComponents(components = {}, context = document.docum
     const componentName = element.getAttribute("g-component");
     //////
     if (typeof components[componentName] === "function") {
-      initialisedComponents.push(createInstance(element, componentName, components[componentName]));
+      initialisedComponents.push(createInstance(element, componentName, components[componentName], eventbus));
     } else {
       console.warn('Constructor for component "' + componentName + '" not found.');
     }
@@ -57,7 +57,7 @@ export default function loadComponents(components = {}, context = document.docum
       const componentName = element.getAttribute("g-component");
 
       if (typeof components[componentName] === "function") {
-        initialisedComponents.push(createInstance(element, componentName, components[componentName]));
+        initialisedComponents.push(createInstance(element, componentName, components[componentName], eventbus));
       } else {
         console.warn(`Constructor for component "${componentName}" not found.`);
       }
