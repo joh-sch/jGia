@@ -1,15 +1,27 @@
-import { queryAll } from "./utils";
 import getComponentFromElement from "./getComponentFromElement";
 import createInstance from "./createInstance";
+import config from "./config";
+
+// ********************************* UTILITIES ********************************** //
+// ****************************************************************************** //
+
+import { queryAll } from "./utils";
+import log from "../../utilities/log";
+
+// ****************************************************************************** //
+// ****************************************************************************** //
 
 /**
  * Creates instances of components without creating duplicates on elements within the context
  * @param components: object of components to load
- * @param context: DOM element
+ * @param context   : DOM element
  */
 
-export default function loadComponents(components = {}, context = document.documentElement, elementID, eventbus) {
+export default function loadComponents(components = {}, context = document.documentElement, elementID) {
+  // Setup...
   const initialisedComponents = [];
+  const run_withLogs = config.get("log_custom");
+  const logStyles = config.get("logStyles");
 
   ///////////////////////////////////
   // Exit, if no comp. provided... //
@@ -26,6 +38,10 @@ export default function loadComponents(components = {}, context = document.docum
   //////////////////////////////////////////////////////////////////////////////////
 
   if (elementID) {
+    if (run_withLogs) {
+      log("Gia (swup plugin)", ["loading single comp. by element ID", `ID: ${elementID}`], logStyles.action);
+    }
+    //////
     const element = document.getElementById(elementID);
     const instance = getComponentFromElement(element);
     //////
