@@ -39,7 +39,7 @@ export default function loadComponents(components = {}, context = document.docum
 
   if (elementID) {
     if (run_withLogs) {
-      log("Gia (swup plugin)", ["loading single comp. by element ID", `ID: ${elementID}`], logStyles.action);
+      log("Gia", ["loading single comp. by element ID", `ID: ${elementID}`], logStyles.action);
     }
     //////
     const element = document.getElementById(elementID);
