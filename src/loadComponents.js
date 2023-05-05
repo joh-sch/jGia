@@ -53,7 +53,7 @@ export default function loadComponents(components = {}, context = document.docum
     const componentName = element.getAttribute("g-component");
     //////
     if (typeof components[componentName] === "function") {
-      initialisedComponents.push(createInstance(element, componentName, components[componentName], eventbus));
+      initialisedComponents.push(createInstance(element, componentName, components[componentName], null));
     } else {
       console.warn('Constructor for component "' + componentName + '" not found.');
     }
@@ -73,7 +73,7 @@ export default function loadComponents(components = {}, context = document.docum
       const componentName = element.getAttribute("g-component");
 
       if (typeof components[componentName] === "function") {
-        initialisedComponents.push(createInstance(element, componentName, components[componentName], eventbus));
+        initialisedComponents.push(createInstance(element, componentName, components[componentName], null));
       } else {
         console.warn(`Constructor for component "${componentName}" not found.`);
       }
