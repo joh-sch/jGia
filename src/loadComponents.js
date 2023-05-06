@@ -7,6 +7,7 @@ import config from "./config";
 
 import { queryAll } from "./utils";
 import log from "../../../../componentUtilities/log";
+import logger from "../../../../componentUtilities/logger";
 
 // ****************************************************************************** //
 // ****************************************************************************** //
@@ -22,6 +23,7 @@ export default function loadComponents(components = {}, context = document.docum
   const initialisedComponents = [];
   const run_withLogs = config.get("log_custom");
   const logStyles = config.get("logStyles");
+  const logOptions = { name: "jGia", run_withLogs, logStyles };
 
   ///////////////////////////////////
   // Exit, if no comp. provided... //
@@ -38,9 +40,7 @@ export default function loadComponents(components = {}, context = document.docum
   //////////////////////////////////////////////////////////////////////////////////
 
   if (elementID) {
-    if (run_withLogs) {
-      log("Gia", ["loading single comp. by element ID", `ID: ${elementID}`], logStyles.action);
-    }
+    logger("info", ["loading single comp. by element ID", `ID: ${elementID}`], "action", { ...logOptions, inline: true });
     //////
     const element = document.getElementById(elementID);
     const instance = getComponentFromElement(element);
