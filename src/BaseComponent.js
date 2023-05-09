@@ -4,6 +4,9 @@ import { queryAll } from "./utils";
  * Component without code splitting support
  */
 
+// ****************************************************************************** //
+// ****************************************************************************** //
+
 export default class Component {
   constructor(element, options) {
     this.element = element;
@@ -12,6 +15,9 @@ export default class Component {
     this._options = options || {};
     this._state = {};
   }
+
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
 
   get ref() {
     return this._ref;
@@ -82,6 +88,9 @@ export default class Component {
     return this._ref;
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+
   get options() {
     return this._options;
   }
@@ -115,6 +124,9 @@ export default class Component {
     return this._options;
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+
   get state() {
     return this._state;
   }
@@ -123,6 +135,9 @@ export default class Component {
     console.warn("You should not change state manually. Use setState instead.");
     this._state = state;
   }
+
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
 
   _load() {
     this.mount();
