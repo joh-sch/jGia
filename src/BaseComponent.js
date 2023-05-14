@@ -101,9 +101,9 @@ export default class Component {
     if (optionsFromAttribute) {
       options = JSON.parse(optionsFromAttribute);
 
-      //////////////////////////////////////////////////////////
-      // Convert 'true'/'false' strings to actual booleans... //
-      //////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////
+      // Convert 'true'/'false' strings to actual booleans //
+      ///////////////////////////////////////////////////////
 
       for (let key in options) {
         if (options.hasOwnProperty(key)) {
@@ -112,6 +112,16 @@ export default class Component {
             options[key] = options[key] === "true" ? true : false;
           }
         }
+      }
+    }
+
+    ///////////////////////////////////////////////////////
+    // Convert options w/ 'defaultValue' string to false //
+    ///////////////////////////////////////////////////////
+
+    for (let key in this._options) {
+      if (this._options.hasOwnProperty(key)) {
+        if (this._options[key] === "defaultValue") this._options[key] = false;
       }
     }
 
