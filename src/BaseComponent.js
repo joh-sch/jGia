@@ -121,7 +121,10 @@ export default class Component {
 
     for (let key in this._options) {
       if (this._options.hasOwnProperty(key)) {
-        if (this._options[key] === "defaultValue") this._options[key] = false;
+        if (this._options[key] === "defaultValue") {
+          console.warn("jGIA: 'defaultValue' string value found in comp. options => converting it to false boolean");
+          this._options[key] = false;
+        }
       }
     }
 
