@@ -107,9 +107,9 @@ export default class Component {
 
       for (let key in options) {
         if (options.hasOwnProperty(key)) {
-          if (options[key] === "true" || options[key] === "false") {
+          if (["true", "false", "1", "0"].includes(options[key])) {
             console.warn("jGIA: string boolean found in comp. options => converting it to actual boolean");
-            options[key] = options[key] === "true" ? true : false;
+            options[key] = options[key] === "true" || options[key] === "1" ? true : false;
           }
         }
       }
