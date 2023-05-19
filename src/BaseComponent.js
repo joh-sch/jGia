@@ -107,6 +107,12 @@ export default class Component {
 
       for (let key in options) {
         if (options.hasOwnProperty(key)) {
+          // Stop, if option is intended to be of type string (+ remove type declaration)...
+          if (typeof options[key] === "string" && options[key].substr(options[key].length - 8) === "<string>") {
+            options[key] = options[key].substr(0, options[key].length - 8);
+            return;
+          }
+          // Convert strings to booleans...
           if (["true", "false", "1", "0"].includes(options[key])) {
             console.warn("jGIA: string boolean found in comp. options => converting it to actual boolean");
             options[key] = options[key] === "true" || options[key] === "1" ? true : false;
