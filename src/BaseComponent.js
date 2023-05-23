@@ -101,17 +101,24 @@ export default class Component {
     if (optionsFromAttribute) {
       options = JSON.parse(optionsFromAttribute);
 
-      ///////////////////////////////////////////////////////
-      // Convert 'true'/'false' strings to actual booleans //
-      ///////////////////////////////////////////////////////
+      /////////////////////////////////////////////
+      // Convert option values to intended types //
+      /////////////////////////////////////////////
 
       for (let key in options) {
         if (options.hasOwnProperty(key)) {
           // Stop, if option is intended to be of type string (+ remove type declaration)...
+          // (i.e. if option value ends with '<string>', no conversion is needed as all option values are strings by default)
           if (typeof options[key] === "string" && options[key].substr(options[key].length - 8) === "<string>") {
             options[key] = options[key].substr(0, options[key].length - 8);
           }
-          // Convert strings to booleans...
+
+          // Convert number strings to actual numbers...
+          if (typeof options[key] === "string" && options[key].substr(options[key].length - 5) === "<int>") {
+            options[key] = parseInt(options[key].substr(0, options[key].length - 5));
+          }
+
+          // Convert 'true'/'false' & '1'/'0' strings to actual booleans...
           else if (["true", "false", "1", "0"].includes(options[key])) {
             console.warn("jGIA: string boolean found in comp. options => converting it to actual boolean");
             options[key] = options[key] === "true" || options[key] === "1" ? true : false;
