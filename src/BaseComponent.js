@@ -114,7 +114,8 @@ export default class Component {
           }
 
           // Convert number strings to actual numbers...
-          if (typeof options[key] === "string" && options[key].substr(options[key].length - 5) === "<int>") {
+          else if (typeof options[key] === "string" && options[key].substr(options[key].length - 5) === "<int>") {
+            console.warn("jGIA: string <int> found in comp. options => converting it to actual integer");
             options[key] = parseInt(options[key].substr(0, options[key].length - 5));
           }
 
