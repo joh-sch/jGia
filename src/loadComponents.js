@@ -6,8 +6,7 @@ import config from "./config";
 // ****************************************************************************** //
 
 import { queryAll } from "./utils";
-import log from "../../../../componentUtilities/log";
-import logger from "../../../../componentUtilities/logger";
+import logger from "../../../componentUtilities/logger";
 
 // ****************************************************************************** //
 // ****************************************************************************** //
