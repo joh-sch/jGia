@@ -17,7 +17,7 @@ import logger from "../../../../baseUtilities/logger";
  * @param context   : DOM element
  */
 
-export default function loadComponents(components = {}, context = document.documentElement, elementID) {
+export default function loadComponents(components = {}, context = document.documentElement, elementID, componentConfig) {
   // Setup...
   const initialisedComponents = [];
   const run_withLogs = config.get("log_custom");
@@ -52,7 +52,7 @@ export default function loadComponents(components = {}, context = document.docum
     const componentName = element.getAttribute("g-component");
     //////
     if (typeof components[componentName] === "function") {
-      initialisedComponents.push(createInstance(element, componentName, components[componentName], null));
+      initialisedComponents.push(createInstance(element, componentName, components[componentName], componentConfig));
     } else {
       console.warn('Constructor for component "' + componentName + '" not found.');
     }
@@ -72,7 +72,7 @@ export default function loadComponents(components = {}, context = document.docum
       const componentName = element.getAttribute("g-component");
 
       if (typeof components[componentName] === "function") {
-        initialisedComponents.push(createInstance(element, componentName, components[componentName], null));
+        initialisedComponents.push(createInstance(element, componentName, components[componentName], componentConfig));
       } else {
         console.warn(`Constructor for component "${componentName}" not found.`);
       }
