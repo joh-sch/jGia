@@ -5,12 +5,12 @@ import config from "./config";
  * @param element: DOM element
  * @param componentName: Component name
  * @param component: Component constructor
- * @param eventbus: options object passed into a component
+ * @param options: options object passed into a component
  */
 
-export default function createInstance(element, componentName, component, eventbus) {
+export default function createInstance(element, componentName, component, options) {
   component.prototype._name = componentName;
-  const instance = new component(element, eventbus);
+  const instance = new component(element, options);
 
   if (config.get("log")) {
     console.info(`Created instance of component "${componentName}".`);
