@@ -98,6 +98,11 @@ export default class Component {
   set options(defaults) {
     let options = {};
     let optionsFromAttribute = this.element.getAttribute("g-options");
+
+    ////////////////////////////////////////////////////////////////
+    // Options from 'options' attribute rendered on comp. element //
+    ////////////////////////////////////////////////////////////////
+
     if (optionsFromAttribute) {
       options = JSON.parse(optionsFromAttribute);
 
@@ -141,6 +146,21 @@ export default class Component {
       }
     }
 
+    /////////////////////////////////////////////////////////////////////////////
+    // Convert options added from comp. config. object provided by app config. //
+    /////////////////////////////////////////////////////////////////////////////
+
+    for (let key in defaults) {
+      if (defaults.hasOwnProperty(key)) {
+        // Convert 'true'/'false' & '1'/'0' strings to actual booleans...
+        if (["true", "false", "1", "0"].includes(defaults[key])) {
+          console.warn("jGIA: string boolean found in comp. options => converting it to actual boolean");
+          defaults[key] = defaults[key] === "true" || defaults[key] === "1" ? true : false;
+        }
+      }
+    }
+
+    // Merge options...
     this._options = {
       ...this._options,
       ...defaults,
