@@ -24,60 +24,54 @@ export default class Component {
   }
 
   set ref(items) {
-    const allRefs = queryAll("[g-ref]", this.element);
+    const componentID = this.element.id;
+    const internalRefs = queryAll("[g-ref]", this.element);
+    const externalRefs = componentID ? queryAll(`[g-ref][g-parent-id="${componentID}"]`) : [];
 
     if (Object.keys(items).length === 0) {
-      allRefs.forEach((element) => {
-        let refName = element.getAttribute("g-ref");
+      internalRefs.forEach((el) => {
+        let refName = el.getAttribute("g-ref");
         if (refName.indexOf(":") !== -1) {
           let refNameArray = refName.split(":");
           if (refNameArray[0] == this._name) {
             if (!this._ref[refNameArray[1]]) {
-              this._ref[refNameArray[1]] = allRefs.filter((item) => {
-                return item.getAttribute("g-ref") === refName;
-              });
+              this._ref[refNameArray[1]] = internalRefs.filter((item) => item.getAttribute("g-ref") === refName);
             }
-          } else {
-            return;
-          }
+          } else return;
         } else {
           if (!this._ref[refName]) {
-            this._ref[refName] = allRefs.filter((item) => {
-              return item.getAttribute("g-ref") === refName;
-            });
+            this._ref[refName] = internalRefs.filter((item) => item.getAttribute("g-ref") === refName);
           }
         }
       });
     } else {
       this._ref = Object.keys(items)
         .map((key) => {
+          // Check, if ref. refers to multiple DOM elements
+          // (value assigned to ref. name is an array)...
           const isArray = Array.isArray(items[key]);
 
           // non-empty refs
           if (items[key] !== null && isArray && items[key].length > 0) {
-            return {
-              name: key,
-              value: items[key],
-            };
+            return { name: key, value: items[key] };
           }
 
+          // Get internal refs. with matching ref. name
+          // (prefixed or unprefixed)...
           const name = key;
           const prefixedName = `${this._name}:${name}`;
+          let refs = internalRefs.filter((el) => el.getAttribute("g-ref") === prefixedName);
+          if (refs.length === 0) refs = internalRefs.filter((el) => el.getAttribute("g-ref") === name);
 
-          let refs = allRefs.filter((element) => element.getAttribute("g-ref") === prefixedName);
+          // Get external refs. with matching ref. name...
+          const refs_external = externalRefs.filter((el) => el.getAttribute("g-ref") === prefixedName);
+          refs.push(...refs_external);
 
-          if (refs.length === 0) {
-            refs = allRefs.filter((element) => element.getAttribute("g-ref") === name);
-          }
+          // If ref. does not refer to multiple DOM elements,
+          // return first of matching elements...
+          if (!isArray) refs = refs.length ? refs[0] : null;
 
-          if (!isArray) {
-            refs = refs.length ? refs[0] : null;
-          }
-
-          return {
-            name: key,
-            value: refs,
-          };
+          return { name: key, value: refs };
         })
         .reduce((acc, ref) => {
           acc[ref.name] = ref.value;
