@@ -114,13 +114,13 @@ export default class Component {
 
           // Convert number strings to actual numbers...
           else if (typeof options[key] === "string" && options[key].substr(options[key].length - 5) === "<int>") {
-            console.warn("jGIA: string <int> found in comp. options => converting it to actual integer");
+            // console.warn("jGIA: string <int> found in comp. options => converting it to actual integer");
             options[key] = parseInt(options[key].substr(0, options[key].length - 5));
           }
 
           // Convert 'true'/'false' & '1'/'0' strings to actual booleans...
           else if (["true", "false", "1", "0"].includes(options[key])) {
-            console.warn("jGIA: string boolean found in comp. options => converting it to actual boolean");
+            // console.warn("jGIA: string boolean found in comp. options => converting it to actual boolean");
             options[key] = options[key] === "true" || options[key] === "1" ? true : false;
           }
         }
@@ -134,7 +134,7 @@ export default class Component {
     for (let key in this._options) {
       if (this._options.hasOwnProperty(key)) {
         if (this._options[key] === "defaultValue") {
-          console.warn("jGIA: 'defaultValue' string value found in comp. options => converting it to false boolean");
+          // console.warn("jGIA: 'defaultValue' string value found in comp. options => converting it to false boolean");
           this._options[key] = false;
         }
       }
@@ -148,7 +148,7 @@ export default class Component {
       if (defaults.hasOwnProperty(key)) {
         // Convert 'true'/'false' & '1'/'0' strings to actual booleans...
         if (["true", "false", "1", "0"].includes(defaults[key])) {
-          console.warn("jGIA: string boolean found in comp. options => converting it to actual boolean");
+          // console.warn("jGIA: string boolean found in comp. options => converting it to actual boolean");
           defaults[key] = defaults[key] === "true" || defaults[key] === "1" ? true : false;
         }
       }
