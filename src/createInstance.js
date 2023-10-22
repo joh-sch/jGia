@@ -12,8 +12,6 @@ export default function createInstance(element, componentName, component, option
   component.prototype._name = componentName;
   const instance = new component(element, options);
 
-  if (config.get("log")) {
-    console.info(`Created instance of component "${componentName}".`);
-  }
+  if (config.get("log")) console.info(`Created instance of component "${componentName}".`);
   return instance;
 }
