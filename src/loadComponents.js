@@ -54,8 +54,13 @@ export default function loadComponents(
     logger("info", ["loading single comp. by element ID", `ID: ${elementID}`], "action", { ...logOptions, inline: true });
     //////
     const el = document.getElementById(elementID);
-    const instance = getComponentFromElement(el);
+    const doNotInit = el.getAttribute("g-do-not-init") === "true";
+    if (doNotInit) {
+      console.warn("Not initialising componen: do-not-init attr. set to true.");
+      return true; // continue
+    }
     //////
+    const instance = getComponentFromElement(el);
     if (instance) {
       console.warn("Error: instance exists: \n", instance);
       return true; // continue
@@ -72,8 +77,15 @@ export default function loadComponents(
     ////////////////////////////////////////////////////////////////////
 
     queryAll("[g-component]", context).forEach((el) => {
-      const instance = getComponentFromElement(el);
+      // Check do-not-init attr. on el. before proceeding...
+      const doNotInit = el.getAttribute("g-do-not-init") === "true";
+      if (doNotInit) {
+        console.warn("Not initialising componen: do-not-init attr. set to true.");
+        return true; // continue
+      }
 
+      // Check if component instance already exists, skip if so...
+      const instance = getComponentFromElement(el);
       if (instance) {
         console.warn("Error: instance exists: \n", instance);
         return true; // continue
