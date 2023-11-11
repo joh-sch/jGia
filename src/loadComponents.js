@@ -1,21 +1,27 @@
-import getComponentFromElement from "./getComponentFromElement";
-import createInstance from "./createInstance";
-import config from "./config";
-
-// ********************************* UTILITIES ********************************** //
-// ****************************************************************************** //
-
-import { queryAll } from "./utils";
-import logger from "../../../../baseUtilities/logger";
-
-// ****************************************************************************** //
-// ****************************************************************************** //
+// ————————————————————————————————————————————— DOC. ————————————————————————————————————————————— //
+// ———————————————————————————————————————————————————————————————————————————————————————————————— //
 
 /**
  * Creates instances of components without creating duplicates on elements within the context
  * @param components: object of components to load
  * @param context   : DOM element
  */
+
+// ————————————————————————————————————————————— LIB. ————————————————————————————————————————————— //
+// ———————————————————————————————————————————————————————————————————————————————————————————————— //
+
+import getComponentFromElement from "./getComponentFromElement";
+import createInstance from "./createInstance";
+import config from "./config";
+
+// ———————————————————————————————————————————— UTIL. ————————————————————————————————————————————— //
+// ———————————————————————————————————————————————————————————————————————————————————————————————— //
+
+import { queryAll } from "./utils";
+import logger from "../../../../baseUtilities/logger";
+
+// ———————————————————————————————————————————————————————————————————————————————————————————————— //
+// ———————————————————————————————————————————————————————————————————————————————————————————————— //
 
 export default function loadComponents(
   components = {},
