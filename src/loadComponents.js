@@ -56,7 +56,7 @@ export default function loadComponents(
     const el = document.getElementById(elementID);
     const doNotInit = el.getAttribute("g-do-not-init") === "true";
     if (doNotInit) {
-      console.warn("Not initialising componen: do-not-init attr. set to true.");
+      console.warn("Not initialising component: do-not-init attr. set to true.");
       return true; // continue
     }
     //////
