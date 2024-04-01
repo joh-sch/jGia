@@ -1,0 +1,3 @@
+[submodule "baseUtilities"]
+	path = baseUtilities
+	url = https://github.com/joh-sch/baseUtilities.git
