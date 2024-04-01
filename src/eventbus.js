@@ -24,23 +24,33 @@ class EventBus {
   ////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
 
-  emit(event, eventObject = {}) {
-    eventObject._name = event;
-    if (this.list[event]) {
-      if (config.get("log")) {
-        console.info(`${this.list[event].length} handler${this.list[event].length > 1 ? "s" : ""} called on event '${event}'`);
-      }
-      this.list[event].forEach((handlerObject) => {
-        handlerObject.handler(eventObject);
-        if (handlerObject.once) {
-          this.off(event, handlerObject.handler);
+  async emit(event, eventObject = {}) {
+    return new Promise((resolve) => {
+      try {
+        eventObject._name = event;
+        if (this.list[event]) {
+          if (config.get("log")) {
+            console.info(
+              `${this.list[event].length} handler${this.list[event].length > 1 ? "s" : ""} called on event '${event}'`
+            );
+          }
+          this.list[event].forEach((handlerObject) => {
+            handlerObject.handler(eventObject);
+            if (handlerObject.once) {
+              this.off(event, handlerObject.handler);
+            }
+          });
+        } else {
+          if (config.get("log")) {
+            console.info(`0 handlers called on event '${event}'`);
+          }
         }
-      });
-    } else {
-      if (config.get("log")) {
-        console.info(`0 handlers called on event '${event}'`);
+        resolve();
+      } catch (error) {
+        console.error(`Error during execution of event emission: '${event}': ${error}`);
+        resolve();
       }
-    }
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////
