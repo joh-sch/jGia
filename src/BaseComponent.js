@@ -201,7 +201,10 @@ export default class Component {
     return `[g-ref="${prefixed ? `${this._name}:` : ""}${ref}"]`;
   }
 
-  setState(changes) {
+  setState(changes, CONFIG = { run_withLogs: false }) {
+    // Setup...
+    const { run_withLogs } = CONFIG;
+    if (run_withLogs) console.log("setState", changes);
     let stateChanges = {};
 
     Object.keys(changes).forEach((key) => {
@@ -261,6 +264,7 @@ export default class Component {
       }
     });
 
+    if (run_withLogs) console.log("stateChanges", stateChanges);
     this.stateChange(stateChanges);
   }
 
